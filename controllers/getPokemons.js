@@ -25,7 +25,7 @@ const getPokemons = (req, res, next) => {
         result =
           key === "type"
             ? result.filter((pokemon) =>
-                pokemon.types.includes(filterQuery[key])
+                pokemon.types.includes(filterQuery[key].trim())
               )
             : key === "search" && !isNaN(parseInt(filterQuery[key].trim()))
             ? result.filter((pokemon) => {

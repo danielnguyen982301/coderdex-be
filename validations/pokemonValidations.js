@@ -9,7 +9,12 @@ exports.createPokemonValidations = [
     .withMessage("ID must be a number")
     .trim()
     .escape(),
-  body("name").notEmpty().trim().escape().withMessage("Name is required"),
+  body("name")
+    .notEmpty()
+    .trim()
+    .toLowerCase()
+    .escape()
+    .withMessage("Name is required"),
   body("types")
     .isArray({ min: 1 })
     .withMessage("Type is required")
@@ -32,17 +37,10 @@ exports.createPokemonValidations = [
 ];
 
 exports.updatePokemonValidations = [
-  body("id")
-    .notEmpty()
-    .withMessage("ID is required")
-    .custom((value) => !isNaN(parseInt(value)))
-    .withMessage("ID must be a number")
-    .trim()
-    .escape()
-    .optional(),
   body("name")
     .notEmpty()
     .trim()
+    .toLowerCase()
     .escape()
     .withMessage("Name is required")
     .optional(),

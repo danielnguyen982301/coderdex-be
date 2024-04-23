@@ -4,7 +4,6 @@ const { validationResult } = require("express-validator");
 
 const updatePokemon = (req, res, next) => {
   const allowedUpdate = [
-    "id",
     "name",
     "description",
     "height",
@@ -44,14 +43,15 @@ const updatePokemon = (req, res, next) => {
       throw exception;
     }
 
-    if (updateKeys.includes("id")) {
+    if (updateKeys.includes("name")) {
       const existingIndex = db.data.findIndex(
         (pokemon) =>
-          pokemon.id === parseInt(updates.id) &&
-          parseInt(updates.id) !== parseInt(pokemonId)
+          pokemon.name === updates.name && pokemon.id !== parseInt(pokemonId)
       );
       if (existingIndex >= 0) {
-        const exception = new Error("ID already exists on another pokemon");
+        const exception = new Error(
+          "This name already exists on another pokemon"
+        );
         exception.statusCode = 400;
         throw exception;
       }
@@ -60,7 +60,6 @@ const updatePokemon = (req, res, next) => {
     const updatedPokemon = {
       ...db.data[targetIndex],
       ...updates,
-      id: parseInt(updates.id, 10) || db.data[targetIndex].id,
     };
     db.data[targetIndex] = updatedPokemon;
 
