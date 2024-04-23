@@ -35,7 +35,7 @@ const processData = async () => {
         .map((word) => word[0].toUpperCase() + word.substring(1))
         .join(", "),
       types: types,
-      url: `http://localhost:8000/images/${data.id}.png`,
+      url: `https://danielnguyen-coderdex-be.onrender.com/images/${data.id}.png`,
     };
   });
   const db = JSON.parse(fs.readFileSync("db.json", "utf-8"));
